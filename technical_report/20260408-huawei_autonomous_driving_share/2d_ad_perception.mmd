@@ -1,0 +1,101 @@
+---
+title: 2021年之前主流 2D 自动驾驶感知系统架构
+id: b8f8fead-5d1a-41d9-a050-e7ed2ebbc69e
+---
+flowchart TD
+	classDef sensor fill:#DCEEFF,stroke:#2F6DB3,color:#16324F,stroke-width:1px;
+	classDef process fill:#EAF7E8,stroke:#4D8B4D,color:#1F3A1F,stroke-width:1px;
+	classDef ai fill:#FFF1D6,stroke:#C28B2C,color:#5B3D00,stroke-width:1px;
+	classDef fusion fill:#F7E6F5,stroke:#9A5FA0,color:#4A214E,stroke-width:1px;
+	classDef output fill:#FFE3E3,stroke:#BA5A5A,color:#5A1F1F,stroke-width:1px;
+
+	subgraph S0[传感器输入]
+		C1[前视 / 环视摄像头]
+		R1[毫米波雷达]
+		L1[3D激光雷达]
+		U1[超声波 / 低速补盲]
+	end
+
+	subgraph S1[预处理]
+		P1[外参标定 / 坐标系配置]
+		P2[图像去畸变 / 曝光校正 / ROI裁剪]
+		P3[雷达点迹预处理 / 聚类]
+		P4[激光点云预处理 / 地面去除]
+	end
+
+	subgraph S2[2D AI 感知主干]
+		A1[2D目标检测<br/>行人 / 车辆 / 非机动车 / 红绿灯]
+		A2[2D分割 / 车道线提取<br/>车道线 / 可行驶区域 / 路缘]
+		A3[3D激光语义分割<br/>路面 / 路沿 / 障碍物 / 静态结构]
+	end
+
+	subgraph S3[传统机器学习 + Rule 后处理]
+		H0[多源结果时间同步 / 对时补偿]
+		H1[候选框筛选 / NMS / 置信度校准]
+		H2[基于尺寸 位置 朝向的先验约束]
+		H3[红绿灯状态修正 / 车道线拓扑拼接]
+		H4[激光语义聚合 / 障碍物规则过滤]
+		H5[误检过滤 / 场景规则补丁]
+	end
+
+	subgraph S4[多传感器融合]
+		F1[图像-雷达关联]
+		F2[多相机目标合并]
+		F3[坐标统一 / 目标级融合]
+	end
+
+	subgraph S5[时序跟踪与融合]
+		T1[跨帧关联]
+		T2[Kalman / IMM 运动估计]
+		T3[Track管理 / 生命周期维护]
+		T4[车道线时序平滑]
+	end
+
+	subgraph S6[感知输出]
+		O1[动态目标列表<br/>位置 速度 航向 类别]
+		O2[红绿灯状态 / 倒计时估计]
+		O3[车道线 / 车道边界]
+		O4[可行驶区域 / Free Space]
+	end
+
+	C1 --> P1
+	R1 --> P1
+	L1 --> P1
+	U1 --> P1
+	P1 --> P2
+	P1 --> P3
+	P1 --> P4
+	P2 --> A1
+	P2 --> A2
+	P4 --> A3
+	P3 --> F1
+	A1 --> H0
+	A2 --> H0
+	A3 --> H0
+	P3 --> H0
+	H0 --> H1
+	H0 --> H3
+	H0 --> H4
+	H1 --> H2
+	H2 --> H5
+	H3 --> H5
+	H4 --> H5
+	H5 --> F1
+	H5 --> F2
+	H4 --> O4
+	F1 --> F3
+	F2 --> F3
+	F3 --> T1
+	T1 --> T2
+	T2 --> T3
+	A2 --> T4
+	T3 --> O1
+	T3 --> O2
+	T4 --> O3
+	T4 --> O4
+
+	class C1,R1,L1,U1 sensor;
+	class P1,P2,P3,P4 process;
+	class A1,A2,A3 ai;
+	class H0,H1,H2,H3,H4,H5,F1,F2,F3,T1,T2,T3,T4 fusion;
+	class O1,O2,O3,O4 output;
