@@ -2,7 +2,7 @@
 
 我需要做一个PPT，介绍我过去5年在华为做自动驾驶相关工作的经历，以及在AI算法上的心得。
 
-这是我的[简历](../../others/resume/my_past_jobs.md)
+这是我的[简历](my_past_jobs.md)
 
 ## 大纲
 

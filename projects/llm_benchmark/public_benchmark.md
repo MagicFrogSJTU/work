@@ -1,6 +1,5 @@
 # 公开benchmark
 
-[返回评测方案](./program.md)
 
 ## 定位
 

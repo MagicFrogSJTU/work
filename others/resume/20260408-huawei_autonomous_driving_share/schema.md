@@ -80,9 +80,9 @@ flowchart TB
 
 图表：(以下两张)
 
-![2D 感知架构|1588](./2d_ad_perception.png)
+![2D 感知架构|1588](2d_ad_perception.png)
 
-![3D 感知架构|1489](./3d_ad_perception.png)
+![3D 感知架构|1489](3d_ad_perception.png)
 
 ---
 
@@ -256,7 +256,7 @@ flowchart TB
 
 图表：
 
-![自动驾驶系统架构](./autonomous_driving_arch.png)
+![自动驾驶系统架构](autonomous_driving_arch.png)
 
 ---
 
