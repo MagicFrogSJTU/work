@@ -1,0 +1,14 @@
+flowchart LR
+    subgraph A[级联训练]
+        A1[通用模型训练]
+        A2[智驾垂域训练]
+        A1 --> A2
+    end
+    subgraph B[联合训练]
+        B1[盘古数据]
+        B2[智驾数据]
+        B3[联训：预训练+后训练]
+        B1 --> B3
+        B2 --> B3
+    end
+    A --> B

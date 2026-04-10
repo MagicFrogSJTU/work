@@ -1,0 +1,13 @@
+flowchart LR
+    subgraph A[交大]
+        A1[AI辅助医学图像检测]
+    end
+    subgraph B[依图科技]
+        B1[声纹识别] --> B2[语音/文本审核]
+        B2 --> B3[图像压缩]
+    end
+    subgraph C[华为车BU]
+        C1[3D感知算法] --> C2[智驾大模型数据闭环]
+    end
+    A --> B
+    B --> C

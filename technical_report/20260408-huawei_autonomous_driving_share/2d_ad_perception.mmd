@@ -31,8 +31,7 @@ flowchart TD
 
 	subgraph S3[传统机器学习 + Rule 后处理]
 		H0[多源结果时间同步 / 对时补偿]
-		H1[候选框筛选 / NMS / 置信度校准]
-		H2[基于尺寸 位置 朝向的先验约束]
+		H1[候选框筛选 / NMS / 置信度校准, 基于尺寸 位置 朝向的先验约束]
 		H3[红绿灯状态修正 / 车道线拓扑拼接]
 		H4[激光语义聚合 / 障碍物规则过滤]
 		H5[误检过滤 / 场景规则补丁]
@@ -76,8 +75,7 @@ flowchart TD
 	H0 --> H1
 	H0 --> H3
 	H0 --> H4
-	H1 --> H2
-	H2 --> H5
+	H1 --> H5
 	H3 --> H5
 	H4 --> H5
 	H5 --> F1
@@ -97,5 +95,5 @@ flowchart TD
 	class C1,R1,L1,U1 sensor;
 	class P1,P2,P3,P4 process;
 	class A1,A2,A3 ai;
-	class H0,H1,H2,H3,H4,H5,F1,F2,F3,T1,T2,T3,T4 fusion;
+	class H0,H1,H3,H4,H5,F1,F2,F3,T1,T2,T3,T4 fusion;
 	class O1,O2,O3,O4 output;
